@@ -20,16 +20,19 @@ def setup_and_run_simulation():
         env.process(warehouse_us.charge_holding_cost())
 
         # The main sequence of events
-        # Factory A produces 100 units
+        # Factory A produces 100 units. This will take 200 time units.
+        print(f"{env.now:.2f}: Ordering production of 100 units.")
         yield env.process(factory_a.produce(quantity=100))
         
-        # Ship 70 units from Factory A to the US Warehouse
+        # Ship 70 units from Factory A to the US Warehouse. This will take 5 time units.
+        print(f"{env.now:.2f}: Ordering shipment of 70 units.")
         yield env.process(ship_goods(env, from_location=factory_a, to_location=warehouse_us, quantity=70))
 
-        # Factory A produces another 50 units
+        # Factory A produces another 50 units. This will take 100 time units.
+        print(f"{env.now:.2f}: Ordering production of 50 units.")
         yield env.process(factory_a.produce(quantity=50))
         
-        print(f"--- Simulation Complete at time {env.now:.2f} ---")
+        print(f"\n--- Simulation Complete at time {env.now:.2f} ---")
         print(f"Final State: '{factory_a.name}' inventory: {factory_a.inventory.level}")
         print(f"Final State: '{warehouse_us.name}' inventory: {warehouse_us.inventory.level}")
 
@@ -37,8 +40,9 @@ def setup_and_run_simulation():
     # 4. Start the simulation logic
     env.process(simulation_logic(env))
 
-    # 5. Run the simulation for a set duration
-    simulation_duration = 30 
+    # 5. Run the simulation for a longer duration
+    # Let's calculate: 200 (prod1) + 5 (ship) + 100 (prod2) = 305. Let's run for 350.
+    simulation_duration = 350 
     env.run(until=simulation_duration)
 
 
