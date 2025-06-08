@@ -1,0 +1,15 @@
+﻿# Virtual Environment
+venv/
+__pycache__/
+*.pyc
+
+# IDE / Editor specific
+.vscode/
+.idea/
+
+# Data files (if you have large datasets you don't want to commit)
+*.csv
+*.json
+
+# Other
+.DS_Store
