@@ -1,50 +1,44 @@
 # main.py
 
-import simpy
-from ares_environment.simulation_nodes import Factory, Warehouse, ship_goods
+from ares_environment.supply_chain_env import SupplyChainEnv
+from stable_baselines3.common.env_checker import check_env
 
-def setup_and_run_simulation():
-    """Sets up and runs a basic supply chain simulation."""
-    # 1. Create a SimPy environment
-    env = simpy.Environment()
+def test_environment():
+    """Tests the custom Gymnasium environment."""
+    
+    print("--- Creating and Checking the Environment ---")
+    env = SupplyChainEnv()
+    
+    # It's good practice to use the environment checker from Stable-Baselines3
+    # to catch potential issues.
+    try:
+        check_env(env)
+        print("\n✅ Environment check passed!")
+    except Exception as e:
+        print(f"\n❌ Environment check failed: {e}")
+        return
 
-    # 2. Create the simulation nodes (the "things" in our world)
-    factory_a = Factory(env, name="Factory_EU")
-    warehouse_us = Warehouse(env, name="Warehouse_US")
-
-    # 3. Define the simulation logic as a generator function
-    def simulation_logic(env):
-        print("\n--- Simulation Starting ---")
+    print("\n--- Testing a Short Episode with Random Actions ---")
+    obs, info = env.reset()
+    total_reward = 0
+    
+    for i in range(20): # Run for 20 steps
+        action = env.action_space.sample() # Take a random action
+        obs, reward, terminated, truncated, info = env.step(action)
+        total_reward += reward
         
-        # Start the continuous processes
-        env.process(warehouse_us.charge_holding_cost())
+        print(f"\nStep {i+1}:")
+        print(f"  Action Taken: Order {int(action[0])} units")
+        print(f"  Observation: [Factory Inv: {int(obs[0])}, Whs Inv: {int(obs[1])}, Mkt Demand: {int(obs[2])}]")
+        print(f"  Reward for this step: {reward:.2f}")
 
-        # The main sequence of events
-        # Factory A produces 100 units. This will take 200 time units.
-        print(f"{env.now:.2f}: Ordering production of 100 units.")
-        yield env.process(factory_a.produce(quantity=100))
-        
-        # Ship 70 units from Factory A to the US Warehouse. This will take 5 time units.
-        print(f"{env.now:.2f}: Ordering shipment of 70 units.")
-        yield env.process(ship_goods(env, from_location=factory_a, to_location=warehouse_us, quantity=70))
-
-        # Factory A produces another 50 units. This will take 100 time units.
-        print(f"{env.now:.2f}: Ordering production of 50 units.")
-        yield env.process(factory_a.produce(quantity=50))
-        
-        print(f"\n--- Simulation Complete at time {env.now:.2f} ---")
-        print(f"Final State: '{factory_a.name}' inventory: {factory_a.inventory.level}")
-        print(f"Final State: '{warehouse_us.name}' inventory: {warehouse_us.inventory.level}")
-
-
-    # 4. Start the simulation logic
-    env.process(simulation_logic(env))
-
-    # 5. Run the simulation for a longer duration
-    # Let's calculate: 200 (prod1) + 5 (ship) + 100 (prod2) = 305. Let's run for 350.
-    simulation_duration = 350 
-    env.run(until=simulation_duration)
-
+        if terminated or truncated:
+            print("Episode finished.")
+            break
+            
+    env.close()
+    print(f"\n--- Test Complete ---")
+    print(f"Total reward over 20 steps: {total_reward:.2f}")
 
 if __name__ == "__main__":
-    setup_and_run_simulation()
+    test_environment()

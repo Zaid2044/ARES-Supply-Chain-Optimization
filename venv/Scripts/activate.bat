@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set "VIRTUAL_ENV=C:\Users\zaid1\OneDrive\Desktop\Learning_files\GitHub projects\ARES-Supply-Chain-Optimization\venv"
+set "VIRTUAL_ENV=C:\dev\ARES-Supply-Chain-Optimization\venv"
 
 if not defined PROMPT set PROMPT=$P$G
 
