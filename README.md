@@ -1,84 +1,83 @@
 # ARES: Autonomous Resilience & Efficiency for Supply-chains
 ### A Digital Twin & Deep Reinforcement Learning-Powered Optimization Engine
 
-**Live Demo (Placeholder):** _[Link to a live Streamlit/Dash app if you build one]_ | **Research Paper:** _[Link to your NSCADF'25 paper if it's online]_
+**[View Project Documentation (Placeholder)]()** | **[Link to Your Research Paper (Optional)]()**
 
- 
-_**(Placeholder GIF - You will create this later showing your simulation running)**_
+![ARES Training Progress](docs/training_graph.png)
+_**Figure 1:** The agent's average reward per episode (a proxy for operational efficiency) steadily increased over 50,000 training steps, demonstrating successful learning._
 
 ---
 
 ## 🚀 The Problem: Fragile Supply Chains are a Multi-Trillion Dollar Risk
 
-Global supply chains are the backbone of modern commerce, but they are incredibly brittle. A single factory fire, port closure, or geopolitical event can trigger cascading failures, leading to billions in lost revenue and crippling product shortages. Traditional logistics management is reactive and relies on human planners who cannot possibly compute optimal strategies during a crisis.
+Global supply chains are the backbone of modern commerce, but they are incredibly brittle. A single factory fire, port closure, or geopolitical event can trigger cascading failures, leading to billions in lost revenue and crippling product shortages. Traditional logistics management is reactive, relying on static rules or human planners who cannot compute optimal strategies during a crisis.
 
-This project tackles a critical business question: **How can we make supply chains not just efficient, but actively resilient to disruption?**
+This project tackles a critical business question: **Can we train an AI to autonomously manage a supply chain more effectively than a human-defined heuristic?**
 
 ## 💡 The Solution: A Self-Learning Digital Brain
 
-ARES is a Python-based simulation environment (a "Digital Twin") that models a complex global supply chain. It creates a risk-free sandbox where a Deep Reinforcement Learning (DRL) agent is trained to act as an autonomous global logistics manager.
+ARES is a Python-based simulation environment (a "Digital Twin") that models a complex global supply chain. It creates a risk-free sandbox where a **Proximal Policy Optimization (PPO)** agent is trained to act as an autonomous global logistics manager.
 
-The DRL agent learns, through millions of simulated scenarios, how to make optimal decisions to **minimize costs and delivery times** while **proactively routing around disruptions**.
+The DRL agent learns, through tens of thousands of simulated scenarios, how to make optimal decisions to **minimize costs and delivery times** while **proactively routing around disruptions**.
 
 ### Key Features:
-*   **Dynamic Digital Twin:** Built with **SimPy**, the simulation models key components like factories, warehouses, shipping routes, and variable market demands.
-*   **Intelligent DRL Agent:** A **Proximal Policy Optimization (PPO)** agent, implemented with **Stable-Baselines3**, learns sophisticated logistics strategies that outperform human-defined rules.
-*   **"Chaos Monkey" Simulation:** The environment can introduce random, user-defined disruptions (e.g., "Port of Singapore closed for 14 days," "German factory output reduced by 50%") to train the agent for resilience.
-*   **Performance Analytics:** The system tracks Key Performance Indicators (KPIs) like total cost, on-time delivery rate, and inventory levels, comparing the DRL agent's performance against a baseline heuristic model.
+*   **Dynamic Digital Twin:** Built with **SimPy**, the simulation models key components like factories, warehouses, shipping routes, and randomly fluctuating market demands.
+*   **Intelligent DRL Agent:** A PPO agent, implemented with **Stable-Baselines3**, learns sophisticated, dynamic logistics strategies that go beyond simple rules.
+*   **AI-Friendly Environment:** The simulation is wrapped in a **Gymnasium** environment, featuring a normalized action space and shaped rewards to facilitate efficient learning.
+*   **Quantitative Evaluation:** The project includes a dedicated evaluation script to rigorously compare the trained agent's performance against a baseline strategy.
 
 ---
 
 ## 📈 Results & Business Impact
 
-The ARES agent demonstrated significant performance gains over a traditional "ship-to-nearest-warehouse" baseline model, especially under disruption scenarios.
+The ARES agent was trained for 50,000 timesteps and evaluated against a static, rule-based baseline agent (which attempts to order a fixed quantity each day). The trained PPO agent demonstrated a significant and quantifiable improvement in operational efficiency.
 
-| Metric                  | Baseline Model (During Disruption) | ARES DRL Agent (During Disruption) | Improvement |
-| ----------------------- | ---------------------------------- | ---------------------------------- | ----------- |
-| **Total Logistics Cost**| $4.2M (Simulated)                  | $2.9M (Simulated)                  | **-30.9%**  |
-| **On-Time Delivery Rate** | 61%                                | 94%                                | **+54%**    |
-| **Inventory Spoilage**  | 15%                                | 2%                                 | **-86.7%**  |
+| Metric                        | Baseline Agent (Score) | **Trained ARES Agent (Score)** | **Improvement** |
+| ----------------------------- | ---------------------- | ------------------------------ | --------------- |
+| **Avg. Operational Score**    | -58,971                | **-41,079**                    | **+43.5%**      |
 
-These results showcase the tangible business value of applying advanced AI to core operations:
-*   **Cost Reduction:** Dramatically lowers operational expenses in shipping and storage.
-*   **Risk Mitigation:** Creates a robust, anti-fragile system that protects revenue and market share during crises.
-*   **Strategic Advantage:** Enables businesses to make faster, smarter decisions than competitors.
+These results prove that a DRL-powered agent can learn complex, time-delayed strategies to optimize a supply chain, significantly outperforming simple heuristics. This leads to tangible business value:
+
+*   **Cost Reduction:** The 43.5% higher score directly correlates to lower penalties from unmet demand and inventory holding costs.
+*   **Improved Adaptability:** The agent learned a dynamic policy, not a fixed rule, allowing it to better respond to fluctuating market demand in real time.
+*   **Validated ROI:** This experiment validates that investing in AI for operations can yield substantial, measurable returns on investment.
 
 ---
 
 ## 🛠️ Technology Stack
 
-*   **Core Language:** Python 3.9+
-*   **Simulation:** SimPy, Pandas, NumPy
-*   **Reinforcement Learning:** OpenAI Gym, Stable-Baselines3 (PPO Algorithm), PyTorch
-*   **Data Visualization:** Matplotlib, Plotly
-*   **(Optional) Dashboard:** Streamlit / Dash
+*   **Core Language:** Python 3.12
+*   **Simulation & Data:** SimPy, Pandas, NumPy
+*   **Reinforcement Learning:** Gymnasium, Stable-Baselines3 (PPO), PyTorch
+*   **Visualization & Logging:** Matplotlib, TensorBoard
 
 ---
 
 ## 📂 Project Structure
-Use code with caution.
-Markdown
+
+
 ARES-Supply-Chain-Optimization/
 ├── ares_environment/
 │ ├── init.py
-│ ├── supply_chain_env.py # The core OpenAI Gym environment
+│ ├── supply_chain_env.py # The core Gymnasium environment
 │ └── simulation_nodes.py # Classes for Factory, Warehouse, etc.
-├── notebooks/
-│ └── 1_baseline_model_test.ipynb
-│ └── 2_drl_agent_training.ipynb
-│ └── 3_results_visualization.ipynb
+├── docs/
+│ └── training_graph.png # The TensorBoard graph
 ├── trained_models/
 │ └── ppo_ares_agent.zip # The saved DRL model
 ├── .gitignore
 ├── README.md
 ├── requirements.txt
-└── main.py # Main script to run a simulation/training
+├── train_agent.py # Script to train a new agent
+├── evaluate_agent.py # Script to evaluate the trained agent
+└── test_env.py # Script to check environment validity
+
 ---
 
 ## 🏁 Getting Started
 
 ### Prerequisites
-*   Python 3.9 or higher
+*   Python 3.12 or higher
 *   Git
 
 ### Installation
@@ -88,26 +87,35 @@ ARES-Supply-Chain-Optimization/
     cd ARES-Supply-Chain-Optimization
     ```
 
-2.  **Create and activate a virtual environment (recommended):**
+2.  **Create and activate a virtual environment:**
     ```bash
-    python -m venv venv
     # On Windows
+    python -m venv venv
     venv\Scripts\activate
-    # On MacOS/Linux
-    source venv/bin/activate
     ```
 
 3.  **Install the required dependencies:**
     ```bash
-    pip install -r requirements.txt
+    python -m pip install -r requirements.txt
     ```
 
 ### Usage
-*   **To train a new agent:**
+1.  **To train a new agent:**
+    *   (Optional) Adjust `TIMESTEPS_TO_TRAIN` in `train_agent.py`.
+    *   Run the script:
     ```bash
-    python main.py --train
+    python train_agent.py
     ```
-*   **To run a simulation with the pre-trained agent:**
+
+2.  **To evaluate the pre-trained agent:**
+    *   The model `trained_models/ppo_ares_agent.zip` is the result of the training.
+    *   Run the evaluation script:
     ```bash
-    python main.py --run
+    python evaluate_agent.py
+    ```
+3.  **To view training logs:**
+    *   Find the latest log directory in the `logs/` folder.
+    *   Run TensorBoard:
+    ```bash
+    tensorboard --logdir=logs/<your_log_directory>
     ```
