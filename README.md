@@ -1,8 +1,6 @@
 # ARES: Autonomous Resilience & Efficiency for Supply-chains
 ### A Digital Twin & Deep Reinforcement Learning-Powered Optimization Engine
 
-**[View Project Documentation (Placeholder)]()** | **[Link to Your Research Paper (Optional)]()**
-
 ![ARES Training Progress](docs/training_graph.png)
 _**Figure 1:** The agent's average reward per episode (a proxy for operational efficiency) steadily increased over 50,000 training steps, demonstrating successful learning._
 
