@@ -68,7 +68,11 @@ ARES is an AI-powered supply chain optimization system that leverages advanced a
 
 ## 📊 Demo
 
-> *Coming soon*: Interactive dashboard walkthrough with screenshots or video.
+ARES forecasts future demand and optimizes inventory based on training data. Here's a sample visualization of the training performance:
+
+<p align="center">
+  <img src="docs/training_graph.png" alt="Training Graph" width="600"/>
+</p>
 
 ---
 
