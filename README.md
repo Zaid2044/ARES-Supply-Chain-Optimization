@@ -1,6 +1,6 @@
 # ARES: Supply Chain Optimization
 
-**Author:** MOHAMMED ZAID AHMED
+**Author:** MOHAMMED ZAID AHMED  
 **Repository:** [ARES-Supply-Chain-Optimization](https://github.com/Zaid2044/ARES-Supply-Chain-Optimization)
 
 ARES is an AI-powered supply chain optimization system that leverages advanced algorithms and intelligent decision-making to improve inventory efficiency, reduce costs, and enhance logistics in real time.
